@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crash Out</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { background: #1a1a1a; font-family: sans-serif; text-align: center; padding: 20px; color: #e0e0e0; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .box { max-width: 400px; width: 95%; }
+        h1 { font-weight: 900; letter-spacing: 5px; margin-bottom: 20px; color: #ff4d4d; text-transform: uppercase; }
+        #daily-quote { font-weight: 600; font-size: 1.1rem; margin-bottom: 30px; min-height: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.4; padding: 15px; border-left: 4px solid #ff4d4d; background: #262626; border-radius: 5px; }
+        textarea { width: 100%; height: 180px; border-radius: 10px; border: 2px solid #404040; padding: 15px; box-sizing: border-box; outline: none; font-size: 1.1rem; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: #333; color: white; }
+        textarea:focus { border-color: #ff4d4d; }
+        button { margin-top: 25px; background: #ff4d4d; color: white; border: none; padding: 18px 50px; border-radius: 5px; cursor: pointer; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; transition: 0.2s; width: 100%; box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3); }
+        button:active { transform: scale(0.98); background: #cc0000; }
+        #crash-msg { margin-top: 25px; font-weight: bold; opacity: 0; transition: 0.8s; color: #ff4d4d; font-size: 1.3rem; position: absolute; left: 0; right: 0; pointer-events: none; text-transform: uppercase; letter-spacing: 2px; }
+        .released { opacity: 0; transform: scale(1.5) rotate(5deg); filter: blur(10px); pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h1>CRASH OUT</h1>
+        <div id="daily-quote">Loading Intensity...</div>
+        <div style="position: relative;">
+            <textarea id="vent" placeholder="DROP THE WEIGHT HERE..."></textarea>
+            <div id="crash-msg">PRESSURE RELEASED. BACK TO THE GRIND.</div>
+        </div>
+        <button id="btn" onclick="releaseVent()">Release the Kraken</button>
+    </div>
+
+    <script>
+        const quotes = [
+            "You were built for the storm. The wind doesn't break you, it cleans you.",
+            "If you're going through hell, keep going.",
+            "Pressure creates diamonds. You're just in the forge right now.",
+            "Stay dangerous. Stay focused.",
+            "They want to see you fold. Don't give them the satisfaction.",
+            "The grind is quiet. The success is loud.",
+            "When the world pushes, push back harder.",
+            "Calm seas never made a skilled sailor.",
+            "Let the anger turn into fuel. Don't waste the heat.",
+            "Pain is temporary. Quitting is forever.",
+            "Dust yourself off. We go again."
+        ];
+
+        window.onload = function() {
+            setNewQuote();
+        };
+
+        function setNewQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('daily-quote').innerText = quotes[randomIndex];
+        }
+
+        function releaseVent() {
+            const v = document.getElementById('vent');
+            const s = document.getElementById('crash-msg');
+            const b = document.getElementById('btn');
+
+            if(v.value.trim() === "") return;
+
+            // VIBRATION: The "Pulse" feel (Only works on Android/Mobile)
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate([100, 50, 200]);
+            }
+
+            v.classList.add('released');
+            b.style.visibility = 'hidden';
+
+            setTimeout(() => {
+                v.value = "";
+                s.style.opacity = "1";
+            }, 600);
+
+            setTimeout(() => {
+                v.classList.remove('released');
+                s.style.opacity = "0";
+                b.style.visibility = 'visible';
+                setNewQuote();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
